@@ -43,7 +43,7 @@ class QuitEvent(Event):
   def __init__(self):
     self.name = "Quit Event"
 
-class CleanupEvent(Event):
+class QuitCleanupEvent(Event):
   """
   Do any cleaning up after the game has quit (AFTER Run loop)
 
@@ -114,7 +114,7 @@ class PygameView:
     if isinstance( event, DrawEvent ):
       # Draw Background
       self.drawBackground()
-    if isinstance( event, CleanupEvent ):
+    if isinstance( event, QuitCleanupEvent ):
       pygame.quit()
 
 # ==============================================================================
@@ -158,7 +158,7 @@ class TickController:
       self.evManager.Post( DrawEvent() )
       self.clock.tick(30)
     # after game has quit, clean up assets
-    self.evManager.Post( CleanupEvent() )
+    self.evManager.Post( QuitCleanupEvent() )
   
   def Notify(self, event):
     if isinstance( event, QuitEvent ):
